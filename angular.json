@@ -1,0 +1,174 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "ngrx-data-odata": {
+      "projectType": "library",
+      "root": "projects/ngrx-data-odata",
+      "sourceRoot": "projects/ngrx-data-odata/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/ngrx-data-odata/tsconfig.lib.json",
+            "project": "projects/ngrx-data-odata/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/ngrx-data-odata/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ngrx-data-odata/src/test.ts",
+            "tsConfig": "projects/ngrx-data-odata/tsconfig.spec.json",
+            "karmaConfig": "projects/ngrx-data-odata/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/ngrx-data-odata/tsconfig.lib.json",
+              "projects/ngrx-data-odata/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "ngrx-data-odata-example": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "projects/ngrx-data-odata-example",
+      "sourceRoot": "projects/ngrx-data-odata-example/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/ngrx-data-odata-example",
+            "index": "projects/ngrx-data-odata-example/src/index.html",
+            "main": "projects/ngrx-data-odata-example/src/main.ts",
+            "polyfills": "projects/ngrx-data-odata-example/src/polyfills.ts",
+            "tsConfig": "projects/ngrx-data-odata-example/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "projects/ngrx-data-odata-example/src/favicon.ico",
+              "projects/ngrx-data-odata-example/src/assets"
+            ],
+            "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+              "projects/ngrx-data-odata-example/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/ngrx-data-odata-example/src/environments/environment.ts",
+                  "with": "projects/ngrx-data-odata-example/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "ngrx-data-odata-example:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "ngrx-data-odata-example:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "ngrx-data-odata-example:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ngrx-data-odata-example/src/test.ts",
+            "polyfills": "projects/ngrx-data-odata-example/src/polyfills.ts",
+            "tsConfig": "projects/ngrx-data-odata-example/tsconfig.spec.json",
+            "karmaConfig": "projects/ngrx-data-odata-example/karma.conf.js",
+            "assets": [
+              "projects/ngrx-data-odata-example/src/favicon.ico",
+              "projects/ngrx-data-odata-example/src/assets"
+            ],
+            "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+              "projects/ngrx-data-odata-example/src/styles.scss"
+            ],
+            "scripts": []
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/ngrx-data-odata-example/tsconfig.app.json",
+              "projects/ngrx-data-odata-example/tsconfig.spec.json",
+              "projects/ngrx-data-odata-example/e2e/tsconfig.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "projects/ngrx-data-odata-example/e2e/protractor.conf.js",
+            "devServerTarget": "ngrx-data-odata-example:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "ngrx-data-odata-example:serve:production"
+            }
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "analytics": "9ef4bf65-2280-4901-a707-aa99039ef421"
+  },
+  "defaultProject": "ngrx-data-odata-example"
+}
