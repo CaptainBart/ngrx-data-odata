@@ -1,17 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { CustomerService } from './customer.service';
-import { Sort, SortDirection } from '@angular/material/sort';
-import { MergeStrategy } from '@ngrx/data';
+import { Sort } from '@angular/material/sort';
+import { take, skip } from 'rxjs/operators';
 
 @Component({
   selector: 'app-customers',
   templateUrl: './customers.component.html',
-  styleUrls: ['./customers.component.scss']
+  styleUrls: ['./customers.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CustomersComponent implements OnInit {
   public customers$ = this.customerService.entities$;
   public isLoading$ = this.customerService.loading$;
   public isLoaded$ = this.customerService.loaded$;
+  public totalCount$ = this.customerService.totalCount$;
+  public skipToken$ = this.customerService.skipToken$;
 
   displayedColumns: string[] = ['CompanyName', 'ContactName', 'Address', 'City', 'Country', 'Phone'];
 
@@ -19,13 +22,15 @@ export class CustomersComponent implements OnInit {
 
   ngOnInit(): void {
     this.customerService.clearCache();
-    this.customerService.getWithQuery({$count: 'true'});
+    this.customerService.getWithODataQuery({count: true, select: ['CustomerID', ...this.displayedColumns]});
   }
 
   sortData(sort: Sort) {
     this.customerService.clearCache();
-    const orderBy = `${sort.active} ${sort.direction}`;
-    console.log(orderBy);
-    this.customerService.getWithQuery({$count: 'true', $orderby: orderBy}, {});
+    this.customerService.getWithODataQuery({count: true, select: ['CustomerID', ...this.displayedColumns], orderBy: sort.active, orderByDirection: sort.direction });
+  }
+
+  more(skipToken: string) {
+    this.customerService.getWithODataQuery({count: true, skipToken, select: ['CustomerID', ...this.displayedColumns]});
   }
 }

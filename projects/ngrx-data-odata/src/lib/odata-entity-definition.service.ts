@@ -14,9 +14,9 @@ export class ODataEntityDefinitionService extends EntityDefinitionService {
 
   public getDefinition<T>(entityName: string, shouldThrow = true): EntityDefinition<T> {
     const definition = super.getDefinition<T>(entityName, shouldThrow);
-    (definition.initialState as ODataEntityCollection).count = 0;
-    (definition.initialState as ODataEntityCollection).skipToken = '';
-    console.dir(definition);
+    const state = (definition.initialState as ODataEntityCollection);
+    state.count = 0;
+    state.skipToken = '';
     return definition;
   }
 }

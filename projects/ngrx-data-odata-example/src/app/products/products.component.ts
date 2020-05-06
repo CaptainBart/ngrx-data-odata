@@ -18,13 +18,11 @@ export class ProductsComponent implements OnInit {
 
   ngOnInit(): void {
     this.productService.clearCache();
-    this.productService.getAll();
+    this.productService.getWithODataQuery({count: true});
   }
 
   sortData(sort: Sort) {
     this.productService.clearCache();
-    const orderBy = `${sort.active} ${sort.direction}`;
-    console.log(orderBy);
-    this.productService.getWithQuery({'$orderby': orderBy}, {});
+    this.productService.getWithODataQuery({count: true, orderBy: sort.active, orderByDirection: sort.direction });
   }
 }

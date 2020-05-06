@@ -1,7 +1,10 @@
 import { DefaultPersistenceResultHandler, EntityAction } from '@ngrx/data';
 import { Action } from '@ngrx/store';
+import { Injectable } from '@angular/core';
 
 const skipTokenName = '$skiptoken=';
+
+@Injectable()
 export class ODataPersistenceResultHandler extends DefaultPersistenceResultHandler {
   handleSuccess(originalAction: EntityAction): (data: any) => Action {
     const actionHandler = super.handleSuccess(originalAction);

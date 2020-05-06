@@ -4,7 +4,8 @@ import {
   HttpUrlGenerator,
   EntityCollectionReducerMethodsFactory,
   PersistenceResultHandler,
-  EntityDefinitionService
+  EntityDefinitionService,
+  EntitySelectorsFactory
 } from '@ngrx/data';
 
 import { DefaultODataDataServiceFactory } from './default-odata-data.service';
@@ -12,6 +13,7 @@ import { ODataHttpUrlGenerator } from './odata-http-url-generator';
 import { ODataEntityCollectionReducerMethodsFactory } from './odata-entity-collection-reducer-methods';
 import { ODataPersistenceResultHandler } from './odata-persistence-result-handler';
 import { ODataEntityDefinitionService } from './odata-entity-definition.service';
+import { ODataEntitySelectorsFactory } from './odata-entity-selectors-factory';
 
 @NgModule({
   declarations: [],
@@ -24,6 +26,7 @@ import { ODataEntityDefinitionService } from './odata-entity-definition.service'
     { provide: PersistenceResultHandler, useClass: ODataPersistenceResultHandler },
     { provide: EntityCollectionReducerMethodsFactory, useClass: ODataEntityCollectionReducerMethodsFactory},
     { provide: EntityDefinitionService, useClass: ODataEntityDefinitionService },
+    { provide: EntitySelectorsFactory, useClass: ODataEntitySelectorsFactory },
   ],
 })
 export class NgrxDataOdataModule { }

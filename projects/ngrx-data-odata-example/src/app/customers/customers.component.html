@@ -28,8 +28,10 @@
     <th mat-header-cell *matHeaderCellDef mat-sort-header> Phone </th>
     <td mat-cell *matCellDef="let customer"> {{customer.Phone}} </td>
   </ng-container>
-  
+
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
+
+<button *ngIf="(skipToken$ | async) as skipToken" (click)="more(skipToken)">Load more</button>
 <mat-spinner diameter="40" *ngIf="isLoading$ | async"></mat-spinner>

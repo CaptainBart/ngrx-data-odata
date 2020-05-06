@@ -1,6 +1,10 @@
 :host {
     table {
         width: 100%;
+
+        tr.mat-row, tr.mat-footer-row {
+          height: 36px;
+      }
     }
 
     mat-spinner, mat-progress-spinner {

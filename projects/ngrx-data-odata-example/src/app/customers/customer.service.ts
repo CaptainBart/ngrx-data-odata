@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
-import { EntityCollectionServiceBase, EntityCollectionServiceElementsFactory } from '@ngrx/data';
+import { EntityCollectionServiceElementsFactory } from '@ngrx/data';
 import { Customer } from './customer';
+import { ODataEntityCollectionServiceBase } from 'ngrx-data-odata';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CustomerService extends EntityCollectionServiceBase<Customer> {
+export class CustomerService extends ODataEntityCollectionServiceBase<Customer> {
   constructor(serviceElementsFactory: EntityCollectionServiceElementsFactory) {
     super('Customer', serviceElementsFactory);
   }
