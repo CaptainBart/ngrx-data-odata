@@ -1,24 +1,18 @@
 import { Injectable, Optional } from '@angular/core';
-import { DefaultDataService, HttpUrlGenerator, DefaultDataServiceConfig, EntityCollectionDataService, QueryParams, HttpMethods, RequestData, DataServiceError } from '@ngrx/data';
-import { HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
+import {
+  DefaultDataService,
+  HttpUrlGenerator,
+  DefaultDataServiceConfig,
+  EntityCollectionDataService,
+  QueryParams
+} from '@ngrx/data';
+
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Update } from '@ngrx/entity';
 
 export class DefaultODataDataService<T> extends DefaultDataService<T> {
-  protected _name: string;
-  protected delete404OK: boolean;
-  protected entityName: string;
-  protected entityUrl: string;
-  protected entitiesUrl: string;
-  protected getDelay = 0;
-  protected saveDelay = 0;
-  protected timeout = 0;
-
-  get name() {
-    return this._name;
-  }
-
   constructor(
     entityName: string,
     protected http: HttpClient,
@@ -27,14 +21,14 @@ export class DefaultODataDataService<T> extends DefaultDataService<T> {
   ) {
     super(entityName, http, httpUrlGenerator, config);
 
-    if(this.entitiesUrl.endsWith('/')) {
+    if (this.entitiesUrl.endsWith('/')) {
       this.entitiesUrl = this.entitiesUrl.substr(0, this.entitiesUrl.length - 1);
       this.entityUrl = this.entityUrl.substr(0, this.entityUrl.length - 1);
     }
   }
 
   public formatEntityUrl(key: any) {
-    if(typeof(key) === 'number') {
+    if (typeof(key) === 'number') {
       return `${this.entitiesUrl}(${key})`;
     }
 
@@ -59,11 +53,8 @@ export class DefaultODataDataService<T> extends DefaultDataService<T> {
     );
   }
 
-  public getAll(): Observable<T[]> {
-    return this.execute('GET', this.entitiesUrl)
-    .pipe(
-      map((odataResult: ODataResult<T>) => odataResult.value)
-    );
+  public getAll() {
+    return this.execute('GET', this.entitiesUrl);
   }
 
   public getById(key: number | string): Observable<T> {
@@ -79,10 +70,7 @@ export class DefaultODataDataService<T> extends DefaultDataService<T> {
   public getWithQuery(queryParams: QueryParams | string): Observable<T[]> {
     const qParams = typeof queryParams === 'string' ? { fromString: queryParams } : { fromObject: queryParams };
     const params = new HttpParams(qParams);
-    return this.execute('GET', this.entitiesUrl, undefined, { params })
-    .pipe(
-      map((odataResult: ODataResult<T>) => odataResult.value)
-    );
+    return this.execute('GET', this.entitiesUrl, undefined, { params });
   }
 
   public update(update: Update<T>): Observable<T> {
@@ -97,11 +85,6 @@ export class DefaultODataDataService<T> extends DefaultDataService<T> {
     const entityOrError = entity || new Error(`No "${this.entityName}" entity to upsert`);
     return this.execute('POST', this.entityUrl, entityOrError);
   }
-}
-
-export interface ODataResult<T> {
-  value: T[];
-  '@odata.count': number;
 }
 
 @Injectable()

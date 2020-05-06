@@ -19,13 +19,13 @@ export class CustomersComponent implements OnInit {
 
   ngOnInit(): void {
     this.customerService.clearCache();
-    this.customerService.getAll();
+    this.customerService.getWithQuery({$count: 'true'});
   }
 
   sortData(sort: Sort) {
     this.customerService.clearCache();
     const orderBy = `${sort.active} ${sort.direction}`;
     console.log(orderBy);
-    this.customerService.getWithQuery({'$orderby': orderBy}, {});
+    this.customerService.getWithQuery({$count: 'true', $orderby: orderBy}, {});
   }
 }
