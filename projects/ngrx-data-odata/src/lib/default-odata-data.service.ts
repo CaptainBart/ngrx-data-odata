@@ -77,8 +77,16 @@ export class DefaultODataDataService<T> extends DefaultDataService<T> {
     const id = update && update.id;
     const updateOrError = id == null ? new Error(`No "${this.entityName}" update data or id`) : update.changes;
 
+    const eTag = update.changes['@odata.etag'];
     const entityUrl = this.formatEntityUrl(id);
-    return this.execute('PUT', entityUrl, updateOrError);
+
+    const headers = { Prefer: 'return-content' };
+    if (eTag) {
+      headers['If-Match'] = eTag;
+
+    }
+
+    return this.execute('PUT', entityUrl, updateOrError, { headers });
   }
 
   public upsert(entity: T): Observable<T> {
@@ -100,7 +108,7 @@ export class DefaultODataDataServiceFactory {
 
   /**
    * Create a default {EntityCollectionDataService} for the given entity type
-   * @param entityName {string} Name of the entity type for this data service
+   * @param entityName Name of the entity type for this data service
    */
   create<T>(entityName: string): EntityCollectionDataService<T> {
     return new DefaultODataDataService<T>(

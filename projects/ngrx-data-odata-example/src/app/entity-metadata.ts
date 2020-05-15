@@ -6,6 +6,9 @@ const entityMetadata: EntityMetadataMap = {
   },
   Product: {
     selectId: (product) => product.ProductID
+  },
+  Airline: {
+    selectId: (airLine) => airLine.AirlineCode
   }
 };
 
@@ -18,4 +21,10 @@ export const entityConfig = {
 
 export const defaultDataServiceConfig: DefaultDataServiceConfig = {
     root : 'https://services.odata.org/V4/Northwind/Northwind.svc',
+    entityHttpResourceUrls: {
+      Airline: {
+        collectionResourceUrl: '/(S(ngrxodatadata))/Airlines',
+        entityResourceUrl: '/(S(ngrxodatadata))/Airlines' // <-- will be ignored, but interface requires
+      }
+    }
   };

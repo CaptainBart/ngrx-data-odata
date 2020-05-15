@@ -1,0 +1,10 @@
+<mat-nav-list>
+  <a [routerLink]="['update', airline.AirlineCode]" mat-list-item *ngFor="let airline of airlines$ | async">
+    <h4 matLine>{{airline.Name}}</h4>
+    <p matLine>{{airline.AirlineCode}} </p>
+    <button mat-icon-button (click)="deleteItem(airline, $event)"><mat-icon>delete</mat-icon></button>
+  </a>
+</mat-nav-list>
+<div>
+  <a routerLink="create" mat-raised-button color="primary">New</a>
+</div>

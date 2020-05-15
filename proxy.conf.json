@@ -1,0 +1,6 @@
+{
+  "/(S(ngrxodatadata))": {
+    "target": "http://localhost:21248/(S(ngrxodatadata))",
+    "secure": false
+  }
+}

@@ -12,7 +12,7 @@ export class ODataHttpUrlGenerator extends DefaultHttpUrlGenerator {
         if (!resourceUrls) {
           const normalizedRoot = normalizeRoot(root);
           const pluralEntityName = this.pluralizzer.pluralize(entityName);
-          const collectionUrl = `${normalizedRoot}/${pluralEntityName}`
+          const collectionUrl = `${normalizedRoot}/${pluralEntityName}`;
           resourceUrls = {
             entityResourceUrl: collectionUrl,
             collectionResourceUrl: collectionUrl,

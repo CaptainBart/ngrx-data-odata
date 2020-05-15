@@ -170,5 +170,12 @@
   "cli": {
     "analytics": "9ef4bf65-2280-4901-a707-aa99039ef421"
   },
-  "defaultProject": "ngrx-data-odata-example"
+  "defaultProject": "ngrx-data-odata-example",
+  "schematics": {
+    "@schematics/angular": {
+      "component": {
+        "changeDetection": "OnPush"
+      }
+    }
+  }
 }
