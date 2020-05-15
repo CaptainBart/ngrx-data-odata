@@ -5,6 +5,7 @@ import { ProductsComponent } from './products.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import {MatPaginatorModule} from '@angular/material/paginator';
 import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
@@ -21,6 +22,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     MatTableModule,
     MatSortModule,
+    MatPaginatorModule,
     MatProgressSpinnerModule,
   ]
 })

@@ -1,8 +1,7 @@
 import { Injectable, Inject, Optional } from '@angular/core';
 import { EntitySelectorsFactory, EntityCollectionCreator, EntityCacheSelector, ENTITY_CACHE_SELECTOR_TOKEN, EntityCollection, CollectionSelectors, EntityMetadata, EntitySelectors$, EntitySelectors } from '@ngrx/data';
-import { Selector, Store, MemoizedSelector } from '@ngrx/store';
-import { ODataEntityCollection } from 'ngrx-data-odata';
-import { Observable } from 'rxjs';
+import { Selector, MemoizedSelector } from '@ngrx/store';
+import { ODataEntityCollection } from './odata-entity-collection';
 
 export interface ODataCollectionSelectors<T> extends CollectionSelectors<T> {
   readonly selectTotalCount: Selector<EntityCollection<T>, number>;

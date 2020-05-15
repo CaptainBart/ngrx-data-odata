@@ -1,29 +1,29 @@
-<table mat-table matSort [dataSource]="products$" (matSortChange)="sortData($event)">
+<table mat-table matSort [dataSource]="pagedProducts$" (matSortChange)="sortData()">
     <ng-container matColumnDef="ProductName">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Product Name </th>
       <td mat-cell *matCellDef="let product"> {{product.ProductName}} </td>
     </ng-container>
-  
+
     <ng-container matColumnDef="QuantityPerUnit">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Quantity Per Unit </th>
       <td mat-cell *matCellDef="let product"> {{product.QuantityPerUnit}} </td>
     </ng-container>
-  
+
     <ng-container matColumnDef="UnitPrice">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Unit Price </th>
       <td mat-cell *matCellDef="let product"> {{product.UnitPrice}} </td>
     </ng-container>
-  
+
     <ng-container matColumnDef="UnitsInStock">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Units In Stock </th>
       <td mat-cell *matCellDef="let product"> {{product.UnitsInStock}} </td>
     </ng-container>
-  
+
     <ng-container matColumnDef="UnitsOnOrder">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Units On Order </th>
         <td mat-cell *matCellDef="let product"> {{product.UnitsOnOrder}} </td>
       </ng-container>
-  
+
     <ng-container matColumnDef="ReorderLevel">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Reorder Level </th>
       <td mat-cell *matCellDef="let product"> {{product.ReorderLevel}} </td>
@@ -33,9 +33,13 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Discontinued </th>
         <td mat-cell *matCellDef="let product"> {{product.Discontinued}} </td>
       </ng-container>
-    
+
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
   <mat-spinner diameter="40" *ngIf="isLoading$ | async"></mat-spinner>
-  
+  <mat-paginator [length]="totalCount$ | async"
+              [pageSize]="10"
+              [pageSizeOptions]="[5, 10, 15, 20]"
+              (page)="pageChanged()">>
+</mat-paginator>

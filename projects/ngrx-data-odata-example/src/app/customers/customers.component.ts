@@ -1,7 +1,6 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ViewChild } from '@angular/core';
 import { CustomerService } from './customer.service';
-import { Sort } from '@angular/material/sort';
-import { take, skip } from 'rxjs/operators';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-customers',
@@ -18,19 +17,29 @@ export class CustomersComponent implements OnInit {
 
   displayedColumns: string[] = ['CompanyName', 'ContactName', 'Address', 'City', 'Country', 'Phone'];
 
+  @ViewChild(MatSort)
+  public sort: MatSort;
+
   constructor(private customerService: CustomerService) { }
 
   ngOnInit(): void {
     this.customerService.clearCache();
-    this.customerService.getWithODataQuery({count: true, select: ['CustomerID', ...this.displayedColumns]});
+    this.getData();
   }
 
-  sortData(sort: Sort) {
+  sortData() {
     this.customerService.clearCache();
-    this.customerService.getWithODataQuery({count: true, select: ['CustomerID', ...this.displayedColumns], orderBy: sort.active, orderByDirection: sort.direction });
+    this.getData();
   }
 
   more(skipToken: string) {
-    this.customerService.getWithODataQuery({count: true, skipToken, select: ['CustomerID', ...this.displayedColumns]});
+    this.getData(skipToken);
+  }
+
+  private getData(skipToken?: string) {
+    const orderBy = this.sort?.active;
+    const orderByDirection = this.sort?.direction;
+
+    this.customerService.getWithODataQuery({count: true, skipToken, orderBy, orderByDirection, select: ['CustomerID', ...this.displayedColumns] });
   }
 }
