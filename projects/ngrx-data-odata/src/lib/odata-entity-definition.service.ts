@@ -1,5 +1,5 @@
 import { Injectable, Optional, Inject } from '@angular/core';
-import { EntityDefinitionService, ENTITY_METADATA_TOKEN, EntityMetadataMap, EntityDefinition } from '@ngrx/data';
+import { EntityDefinitionService, ENTITY_METADATA_TOKEN, EntityMetadataMap, EntityDefinition, EntityMetadata, createEntityDefinition } from '@ngrx/data';
 import { ODataEntityCollection } from './odata-entity-collection';
 
 @Injectable()
@@ -12,11 +12,19 @@ export class ODataEntityDefinitionService extends EntityDefinitionService {
     super(entityMetadataMaps);
   }
 
-  public getDefinition<T>(entityName: string, shouldThrow = true): EntityDefinition<T> {
-    const definition = super.getDefinition<T>(entityName, shouldThrow);
-    const state = (definition.initialState as ODataEntityCollection);
-    state.count = 0;
-    state.skipToken = '';
-    return definition;
+  public registerMetadata(metadata: EntityMetadata) {
+    if (metadata) {
+      const definition = createODataEntityDefinition(metadata);
+      this.registerDefinition(definition);
+    }
   }
+}
+
+export function createODataEntityDefinition<T, S extends object>(
+  metadata: EntityMetadata<T, S>
+): EntityDefinition<T> {
+  metadata.additionalCollectionState = {...metadata.additionalCollectionState, count: 0, skipToken: ''};
+
+  const definition = createEntityDefinition(metadata);
+  return definition;
 }

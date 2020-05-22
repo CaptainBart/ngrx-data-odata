@@ -77,21 +77,21 @@ export class DefaultODataDataService<T> extends DefaultDataService<T> {
     const id = update && update.id;
     const updateOrError = id == null ? new Error(`No "${this.entityName}" update data or id`) : update.changes;
 
-    const eTag = update.changes['@odata.etag'];
+    const eTag = update && update.changes && update.changes['@odata.etag'];
     const entityUrl = this.formatEntityUrl(id);
 
     const headers = { Prefer: 'return-content' };
     if (eTag) {
       headers['If-Match'] = eTag;
-
     }
 
     return this.execute('PUT', entityUrl, updateOrError, { headers });
   }
 
   public upsert(entity: T): Observable<T> {
-    const entityOrError = entity || new Error(`No "${this.entityName}" entity to upsert`);
-    return this.execute('POST', this.entityUrl, entityOrError);
+    const error = new Error(`Upsert is not supported`);
+    // const entityOrError = entity || new Error(`No "${this.entityName}" entity to upsert`);
+    return this.execute('POST', this.entityUrl, error);
   }
 }
 
