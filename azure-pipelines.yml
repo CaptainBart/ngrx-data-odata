@@ -18,5 +18,12 @@ steps:
 - script: |
     npm install -g @angular/cli
     npm install
-    ng build --prod --project ngrx-data-odata
-  displayName: 'npm install and build'
+  displayName: 'npm install'
+
+- script: |
+    ng test ngrx-data-odata --watch=false --browsers=ChromeHeadless
+  displayName: 'test'
+
+- script: |
+    ng build ngrx-data-odata --prod
+  displayName: 'build'
