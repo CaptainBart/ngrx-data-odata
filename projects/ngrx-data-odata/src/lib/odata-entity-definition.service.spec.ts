@@ -7,7 +7,7 @@ import {
 } from '@ngrx/data';
 
 import { ODataEntityDefinitionService } from './odata-entity-definition.service';
-import { ODataEntityCollection } from 'ngrx-data-odata';
+import { ODataEntityCollection } from './odata-entity-collection';
 
 @NgModule({})
 class LazyModule {
