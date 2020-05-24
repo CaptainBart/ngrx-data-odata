@@ -15,7 +15,7 @@ export class ODataPersistenceResultHandler extends DefaultPersistenceResultHandl
       const action = actionHandler.call(this, dataArray);
       if (action) {
         if (data['@odata.count']) {
-          action.payload.count = data['@odata.count'];
+          action.payload.totalCount = data['@odata.count'];
         }
 
         if (data['@odata.nextLink']) {

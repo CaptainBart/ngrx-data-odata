@@ -29,7 +29,7 @@ export class ODataEntitySelectorsFactory extends EntitySelectorsFactory {
   createCollectionSelectors<T, S extends ODataCollectionSelectors<T> = ODataCollectionSelectors<T>>(metadataOrName: EntityMetadata<T> | string): S {
     const selectors = (typeof(metadataOrName) === 'string') ? super.createCollectionSelectors<T, S>(metadataOrName) : super.createCollectionSelectors<T, S>(metadataOrName);
 
-    const selectTotalCount = (c: ODataEntityCollection<T>) => c.count;
+    const selectTotalCount = (c: ODataEntityCollection<T>) => c.totalCount;
     const selectSkipToken = (c: ODataEntityCollection<T>) => c.skipToken;
 
     return {

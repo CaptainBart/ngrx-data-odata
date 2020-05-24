@@ -1,6 +1,6 @@
 {
-  "/(S(ngrxodatadata))": {
-    "target": "http://localhost:21248/(S(ngrxodatadata))",
+  "/odata": {
+    "target": "http://localhost:5000",
     "secure": false
   }
 }

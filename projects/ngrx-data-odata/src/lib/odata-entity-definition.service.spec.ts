@@ -49,7 +49,7 @@ describe('EntityDefinitionService', () => {
       expect(def).toBeDefined();
 
       const initialState = (def.initialState as ODataEntityCollection);
-      expect(initialState.count).toBeDefined();
+      expect(initialState.totalCount).toBeDefined();
       expect(initialState.skipToken).toBeDefined();
     });
   });

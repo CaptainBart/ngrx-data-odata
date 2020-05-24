@@ -17,8 +17,8 @@ export class ODataEntityCollectionReducerMethods<T> extends EntityCollectionRedu
    protected queryManySuccess(collection: EntityCollection<T>, action: EntityAction<T[]>): EntityCollection<T> {
     const ec = super.queryManySuccess(collection, action) as ODataEntityCollection<T>;
     const payload = action.payload as ODataEntityActionPayload<T[]>;
-    if (payload.count) {
-      ec.count = payload.count;
+    if (payload.totalCount) {
+      ec.totalCount = payload.totalCount;
     }
 
     if (payload.skipToken) {
@@ -31,8 +31,8 @@ export class ODataEntityCollectionReducerMethods<T> extends EntityCollectionRedu
   protected removeAll(collection: EntityCollection<T>, action: EntityAction<T>): EntityCollection<T> {
     const ec = super.removeAll(collection, action) as ODataEntityCollection<T>;
 
-    if (ec.count) {
-      ec.count = 0;
+    if (ec.totalCount) {
+      ec.totalCount = 0;
     }
 
     if (ec.skipToken) {
